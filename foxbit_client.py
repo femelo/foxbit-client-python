@@ -3,14 +3,14 @@ from queue import Empty
 from datetime import datetime
 from time import sleep
 import websocket
-from websocket._logging import _logger as ws_logger
+import websocket._logging as wsLogging
 import json
 from typing import Union, Any, List, Tuple
 import hmac
 import hashlib
 
 from api_descriptors import EndPointMethodDescriptor, EndPointMethodReplyType, EndPointMethodType, RotatingQueue
-from log_service import WebSocketLogger
+from log_service import DefaultLogger, WebSocketLogger
 from message_enums import MessageType
 from message_frame import MessageFrame
 from message_request import AllDepositOrWithdrawTicketsRequest, CancelReplaceOrderRequest, \
@@ -161,9 +161,10 @@ class FoxBitClient(object):
     }
 
     socket: websocket.WebSocket
-    logger: WebSocketLogger
+    logger: DefaultLogger
+    connectionLogger: WebSocketLogger
 
-    def __init__(self, enableLog=True):
+    def __init__(self, enableConnLog=True):
         # Only alias for SubscribeLevel1
         self.endPointDescriptorByMethod["Level1UpdateEvent"] = self.endPointDescriptorByMethod["SubscribeLevel1"]
         # Only alias for SubscribeLevel2
@@ -172,8 +173,9 @@ class FoxBitClient(object):
         self.endPointDescriptorByMethod["TickerDataUpdateEvent"] = self.endPointDescriptorByMethod["SubscribeTicker"]
         # Only alias for SubscribeTrade
         self.endPointDescriptorByMethod["TradeDataUpdateEvent"] = self.endPointDescriptorByMethod["SubscribeTrades"]
-        self.enableLog = enableLog
-        self.logger = WebSocketLogger()
+        self.enableConnLog = enableConnLog
+        self.logger = DefaultLogger()
+        self.connectionLogger = WebSocketLogger()
         self.connectQueue = RotatingQueue(maxsize=MAX_QUEUE_SIZE)
         self.thread = None
         self.userId = None
@@ -190,9 +192,9 @@ class FoxBitClient(object):
     * @memberof FoxBitClient
     '''
     def connect(self, url: str = "wss://api.foxbit.com.br") -> bool:
-        if self.enableLog:
-          websocket.enableTrace(True)
-          ws_logger.handlers = self.logger.handlers
+        if self.enableConnLog:
+          websocket.enableTrace(True, handler=self.connectionLogger.handlers[-1])
+          wsLogging._logger = self.connectionLogger
         connected = True
         try:
             self.socket = websocket.WebSocketApp(
@@ -202,7 +204,7 @@ class FoxBitClient(object):
                 on_close=self.onClose,
                 on_error=self.onError
             )
-            self.thread = Thread(target=self.socket.run_forever, args=(None, None, 40, 35), daemon=True)
+            self.thread = Thread(target=self.socket.run_forever, args=(None, None, 30, 25), daemon=True)
             self.thread.start()
             while not self.isConnected():
               sleep(1)

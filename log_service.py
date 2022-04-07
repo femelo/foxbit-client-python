@@ -58,7 +58,7 @@ class RotatingFileLogger(Logger):
         super().callHandlers(record)
 
     def _log(self, level, msg, args, exc_info=None, extra=None, stack_info=False):
-        color_msg = COLORMAP[level] + msg + COLOR_RESET
+        color_msg = '\n' + COLORMAP[level] + msg + COLOR_RESET
         super()._log(level, color_msg, args, exc_info, extra, stack_info)
 
 class DefaultLogger(RotatingFileLogger):
@@ -69,6 +69,7 @@ class DefaultLogger(RotatingFileLogger):
             encoding=encoding, 
             level=level, 
             maxFileSize=maxFileSize)
+        self.rotateFile()
 
 class WebSocketLogger(RotatingFileLogger):
     def __init__(self, encoding='utf-8', level=DEBUG, maxFileSize=20):
@@ -78,3 +79,4 @@ class WebSocketLogger(RotatingFileLogger):
             encoding=encoding, 
             level=level, 
             maxFileSize=maxFileSize)
+        self.rotateFile()

@@ -28,7 +28,7 @@ def get_response(q: RotatingQueue, timeout=30):
 def test_sequence(debug=False):
     print(Fore.CYAN + "FoxBit Client - API Private endpoints" + Style.RESET_ALL)
     print(Fore.CYAN + "FoxBit Client - Requests" + Style.RESET_ALL)
-    client = FoxBitClient(enableLog=False)
+    client = FoxBitClient(enableConnLog=True)
     omsId = 1
 
     print("{0:<30}".format("connect()"), end='')
