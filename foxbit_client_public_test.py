@@ -3,8 +3,7 @@ from api_descriptors import RotatingQueue
 from queue import Empty
 from datetime import datetime, timedelta
 from foxbit_client import FoxBitClient
-from message_enums import ProductType
-from colorama import Fore, Back, Style
+from colorama import Fore, Style
 
 OK =     "[" + Fore.GREEN + "  OK  " + Style.RESET_ALL + "]"
 FAILED = "[" + Fore.RED   + "FAILED" + Style.RESET_ALL + "]"

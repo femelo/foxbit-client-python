@@ -2,10 +2,8 @@
 import os
 from api_descriptors import RotatingQueue
 from queue import Empty
-from datetime import datetime, timedelta
 from foxbit_client import FoxBitClient
-from message_enums import ProductType
-from colorama import Fore, Back, Style
+from colorama import Fore, Style
 
 # Get environment variables
 API_KEY = os.getenv("API_KEY")

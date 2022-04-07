@@ -13,10 +13,10 @@ from api_descriptors import EndPointMethodDescriptor, EndPointMethodReplyType, E
 from log_service import DefaultLogger, WebSocketLogger
 from message_enums import MessageType
 from message_frame import MessageFrame
-from message_request import AllDepositOrWithdrawTicketsRequest, CancelReplaceOrderRequest, \
+from message_request import CancelReplaceOrderRequest, \
     OrderFeeRequest, SendOrderRequest
 
-from helpers import formatTicks, formatL2Snapshots, formatTrades
+from helpers import formatTicks, formatL2Snapshots
 
 MAX_QUEUE_SIZE = 100
 ONE_SHOT_TIMEOUT = 5.0
