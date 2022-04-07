@@ -6,9 +6,9 @@ This is the README file for the Python client of the FoxBit exchange websocket A
 The software artifacts of this repository are licensed under [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0.html). A copy of the terms and conditions can be found in the [LICENSE](LICENSE) file.
 
 ## Requirements
-	- Python >= 3.7
-	- Websocket-client
-	- Colorama
+- Python >= 3.7
+- Websocket-client
+- Colorama
 
 ## Installation
 Install dependencies and clone this repository:
@@ -33,6 +33,7 @@ print(data)
 ## Private endpoints
 Instantiate client, authenticate user, call endpoint and log out. Example:
 ```
+import os
 from foxbit_client import FoxBitClient
 # Get environment variables
 API_KEY = os.getenv("API_KEY")
