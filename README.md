@@ -12,14 +12,14 @@ The software artifacts of this repository are licensed under [Apache License 2.0
 
 ## Installation
 Install dependencies and clone this repository:
-```
+```bash
 python3 -m pip install --user websocket-client colorama && \
 git clone https://github.com/femelo/foxbit-client-python.git
 ```
 
 ## Public endpoints
 Inside the repository folder, instantiate client, connect, call endpoint. Example:
-```
+```python
 from foxbit_client import FoxBitClient
 # Instantiate client
 client = FoxBitClient()
@@ -32,7 +32,7 @@ print(data)
 
 ## Private endpoints
 Instantiate client, authenticate user, call endpoint and log out. Example:
-```
+```python
 import os
 from foxbit_client import FoxBitClient
 # Get environment variables
@@ -56,10 +56,10 @@ For complete reference, check https://foxbit.com.br/foxbit-api/.
 
 ## Test scripts
 Two test scripts are provided to verify functionality of almost all public and private endpoints. These scripts can be run by
-```
+```bash
 python3 foxbit_client_public_test.py
 ```
 and, assuming the proper environment variables are set,
-```
+```bash
 python3 foxbit_client_private_test.py
 ```
